@@ -1,10 +1,9 @@
-import 'dotenv/config';
 import express from "express";
 import cors from "cors";
-import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
+import { createClient } from "@supabase/supabase-js";
 
-// Load environment variables from .env file
+// ✅ Load environment variables
 dotenv.config();
 
 const app = express();
@@ -22,9 +21,32 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ✅ Root route
+// ✅ Root route (visible on Render homepage)
 app.get("/", (req, res) => {
-  res.send("✅ Backend server is running successfully!");
+  res.send(`
+    <html>
+      <head>
+        <title>Learning Platform Backend</title>
+        <style>
+          body { 
+            font-family: system-ui, sans-serif; 
+            background: #0f172a; 
+            color: #f8fafc; 
+            text-align: center; 
+            padding: 50px; 
+          }
+          h1 { color: #38bdf8; }
+          p { color: #94a3b8; }
+        </style>
+      </head>
+      <body>
+        <h1>🚀 Learning Platform Backend</h1>
+        <p>Status: <strong>✅ Running Successfully</strong></p>
+        <p>Environment: ${process.env.NODE_ENV || "development"}</p>
+        <p>Version: 1.0.0</p>
+      </body>
+    </html>
+  `);
 });
 
 // ✅ Fetch all courses
